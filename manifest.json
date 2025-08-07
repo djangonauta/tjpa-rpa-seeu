@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "version": "0.0.1",
+  "name": "TJPA RPA SEEU",
+  "description": "Automatização de funcionalidades no SEEU.",
+  "icons": {
+    "16": "assets/img/robot.png",
+    "48": "assets/img/robot.png",
+    "128": "assets/img/robot.png"
+  },
+  "action": {
+    "default_title": "RPA SEEU",
+    "default_popup": "pages/popup.html"
+  },
+  "options_page": "pages/options.html",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.python.org/*"
+      ],
+      "css": [
+        "assets/css/python.css"
+      ],
+      "js": [
+        "assets/js/python.js"
+      ]
+    }
+  ]
+}
