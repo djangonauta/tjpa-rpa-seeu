@@ -43,7 +43,7 @@ const preAnalisarProcessoPasso3 = async (userMainFrame) => {
   (await esperarPeloElemento('a[onclick^="openDialog(\'/seeu/processo/preAnalise.do', { parent: userMainFrame })).click();
 
   const iframeModal = await esperarPeloElemento('iframe', { parent: userMainFrame });
-  iframeModal.addEventListener('load', async () => {
+  const load = async () => {
     const result = await chrome.storage.sync.get(['modeloMinutaPreAnalise']);
 
     if (!result.modeloMinutaPreAnalise) {
@@ -54,8 +54,11 @@ const preAnalisarProcessoPasso3 = async (userMainFrame) => {
       const texto = result.modeloMinutaPreAnalise;
       enviarCharsToAutoComplete(campoTexto, texto);
 
+      console.log('passou por aqui');
       const modeloAutoComplete = await esperarPeloElemento('#ajaxAuto_textoPesq ul li', { parent: iframeModal.contentDocument });
       modeloAutoComplete.click();
+      iframeModal.removeEventListener('load', load);
     }
-  })
+  };
+  iframeModal.addEventListener('load', load);
 }
