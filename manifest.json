@@ -10,11 +10,12 @@
   },
   "action": {
     "default_title": "RPA SEEU",
-    "default_popup": "pages/popup.html"
+    "default_popup": "popup/popup.html"
   },
-  "options_page": "pages/options.html",
+  "options_page": "options/options.html",
   "background": {
-    "service_worker": "service-worker.js"
+    "service_worker": "service-worker.js",
+    "type": "module"
   },
   "permissions": [
     "storage",
@@ -27,11 +28,14 @@
         "https://*.seeuintegra.pje.jus.br/*"
       ],
       "js": [
-        "assets/js/base.js",
-        "assets/js/adicionar-botoes-automacao.js"
+        "modulos/state.js",
+        "modulos/base.js",
+        "modulos/automacoes.js",
+        "main.js"
       ],
-      "all_frames": true,
-      "run_at": "document_end"
+      "type": "module",
+      "run_at": "document_end",
+      "all_frames": true
     }
   ]
 }

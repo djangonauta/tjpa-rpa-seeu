@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome Extension</title>
+  <link rel="stylesheet" href="../assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="./options.css" />
+</head>
+
+<body>
+  <div class="container-fluid mt-2">
+    <ul class="nav nav-tabs" id="tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#seeuConfig" type="button"
+          role="tab" aria-controls="seeuConfig" aria-selected="true">SEEU</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#pjeConfig" type="button"
+          role="tab" aria-controls="pjeConfig" aria-selected="false">PJE</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="conteudoTabs">
+      <div class="tab-pane fade show active mt-2" id="seeuConfig" role="tabpanel" aria-labelledby="home-tab"
+        tabindex="0">
+        <div class="row">
+          <div class="col-4">
+            <div class="card">
+              <div class="card-header">Pré-Análise de processos</div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label class="form-label" for="idAgrupadorPreAnalise">ID do Agrupador de Pré Análise</label>
+                  <input type="text" id="idAgrupadorPreAnalise" class="form-control form-control-sm" required autofocus />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="modeloMinutaPreAnalise">Modelo de minuta para pré-analise</label>
+                  <input type="text" id="modeloMinutaPreAnalise" class="form-control form-control-sm" required />
+                </div>
+                <div>
+                  <button id="saveConfig" class="btn btn-primary btn-sm">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="pjeConfig" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <h4>Configurações PJE</h4>
+      </div>
+    </div>
+    <script src="../assets/bootstrap.min.js"></script>
+    <script src="./options.js"></script>
+</body>
+
+</html>
