@@ -87,6 +87,11 @@ function enviarCharsToAutoComplete(campoTexto, texto) {
   }
 }
 
+function selecionarOpcaoPorLabel(select, label) {
+  const option = Array.from(select.options).find(opt => opt.textContent.trim() === label);
+  select.value = option.value;
+}
+
 class ElementBuilder {
   constructor(tag) {
     this.element = document.createElement(tag);

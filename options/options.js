@@ -3,12 +3,12 @@
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
     let modeloMinutaPreAnalise = null;
-    let idAgrupadorPreAnalise = null;
+    let agrupadorPreAnalise = null;
 
-    chrome.storage.sync.get(['idAgrupadorPreAnalise', 'modeloMinutaPreAnalise'], function (result) {
-      if (result.idAgrupadorPreAnalise) {
-        idAgrupadorPreAnalise = result.idAgrupadorPreAnalise
-        document.getElementById('idAgrupadorPreAnalise').value = idAgrupadorPreAnalise;
+    chrome.storage.sync.get(['agrupadorPreAnalise', 'modeloMinutaPreAnalise'], function (result) {
+      if (result.agrupadorPreAnalise) {
+        agrupadorPreAnalise = result.agrupadorPreAnalise
+        document.getElementById('agrupadorPreAnalise').value = agrupadorPreAnalise;
       }
       if (result.modeloMinutaPreAnalise) {
         modeloMinutaPreAnalise = result.modeloMinutaPreAnalise;
@@ -18,13 +18,13 @@
 
     document.getElementById('saveConfig').addEventListener('click', function () {
       modeloMinutaPreAnalise = document.getElementById('modeloMinutaPreAnalise').value;
-      idAgrupadorPreAnalise = document.getElementById('idAgrupadorPreAnalise').value;
+      agrupadorPreAnalise = document.getElementById('agrupadorPreAnalise').value;
 
-      if (!modeloMinutaPreAnalise || !idAgrupadorPreAnalise) {
+      if (!modeloMinutaPreAnalise || !agrupadorPreAnalise) {
         alert('Campos obrigatórios não preenchidos');
       } else {
         chrome.storage.sync.set({
-          'idAgrupadorPreAnalise': idAgrupadorPreAnalise,
+          'agrupadorPreAnalise': agrupadorPreAnalise,
           'modeloMinutaPreAnalise': modeloMinutaPreAnalise
         }, function () {
           alert('Configurações salvas com sucesso');

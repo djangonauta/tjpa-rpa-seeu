@@ -19,10 +19,11 @@ const preAnalisarProcessoPasso2 = async (userMainFrame) => {
   const tipoSelect = await esperarPeloElemento('#tipoConclusao', { parent: userMainFrame });
   tipoSelect.value = '-1';
 
-  let result = await chrome.storage.sync.get(['idAgrupadorPreAnalise']);
-  if (result.idAgrupadorPreAnalise) {
+  let result = await chrome.storage.sync.get(['agrupadorPreAnalise']);
+  if (result.agrupadorPreAnalise) {
     const agrupadorSelect = await esperarPeloElemento('#idAgrupador', { parent: userMainFrame });
-    agrupadorSelect.value = result.idAgrupadorPreAnalise;
+    selecionarOpcaoPorLabel(agrupadorSelect, result.agrupadorPreAnalise);
+
   } else {
     alert('Agrupador não configurado');
     return;
@@ -52,6 +53,9 @@ const preAnalisarProcessoPasso3 = async (userMainFrame) => {
       campoTexto.focus();
       const texto = result.modeloMinutaPreAnalise;
       enviarCharsToAutoComplete(campoTexto, texto);
+
+      const modeloAutoComplete = await esperarPeloElemento('#ajaxAuto_textoPesq ul li', { parent: iframeModal.contentDocument });
+      modeloAutoComplete.click();
     }
   })
 }
