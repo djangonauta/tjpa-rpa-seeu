@@ -25,42 +25,12 @@ function setupAutomation() {
         case PRE_ANALISE_PROCESSOS:
           switch (automacaoData.passo) {
             case PRE_ANALISE_PROCESSOS_PASSO_2:
-              const tipoSelect = await esperarPeloElemento('#tipoConclusao', { parent: userMainFrame });
-              tipoSelect.value = '-1';
-
-              let result = await chrome.storage.sync.get(['idAgrupadorPreAnalise']);
-              if (result.idAgrupadorPreAnalise) {
-                const agrupadorSelect = await esperarPeloElemento('#idAgrupador', { parent: userMainFrame });
-                agrupadorSelect.value = result.idAgrupadorPreAnalise;
-              } else {
-                alert('Agrupador não configurado');
-                return;
-              }
-
-              const preAnaliseRadio = await esperarPeloElemento('#processoConclusaoForm > seeu-preference > table:nth-child(2) > tbody > tr > td:nth-child(1) > fieldset > table > tbody > tr:nth-child(1) > td:nth-child(2) > label:nth-child(2) > input[type=radio]', {
-                parent: userMainFrame
-              });
-              preAnaliseRadio.click();
-
-              (await esperarPeloElemento('#searchButton', { parent: userMainFrame })).click();
-              automacaoData = { automacao: PRE_ANALISE_PROCESSOS, passo: PRE_ANALISE_PROCESSOS_PASSO_3 };
-              sessionStorage.setItem(CHAVE_AUTOMACAO, JSON.stringify(automacaoData));
+              preAnalisarProcessoPasso2(userMainFrame);
               break;
 
             case PRE_ANALISE_PROCESSOS_PASSO_3:
-              (await esperarPeloElemento('a[onclick^="openDialog(\'/seeu/processo/preAnalise.do', { parent: userMainFrame })).click();
-              const iframeModal = await esperarPeloElemento('iframe', { parent: userMainFrame });
-              iframeModal.addEventListener('load', async () => {
-                const result = await chrome.storage.sync.get(['modeloMinutaPreAnalise']);
-                if (!result.modeloMinutaPreAnalise) {
-                  alert('Modelo de minuta não cadastrado');
-                } else {
-                  const campoTexto = iframeModal.contentDocument.querySelector('#textoPesq');
-                  campoTexto.focus();
-                  const texto = result.modeloMinutaPreAnalise;
-                  enviarCharsToAutoComplete(campoTexto, texto);
-                }
-              })
+              preAnalisarProcessoPasso3(userMainFrame);
+              break;
           }
       }
     }

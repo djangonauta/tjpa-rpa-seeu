@@ -30,7 +30,7 @@
       "js": [
         "modulos/state.js",
         "modulos/base.js",
-        "modulos/automacoes.js",
+        "modulos/preAnaliseProcesso.js",
         "main.js"
       ],
       "type": "module",
