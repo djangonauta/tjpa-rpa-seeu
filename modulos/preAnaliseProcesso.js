@@ -1,4 +1,6 @@
 const preAnalisarProcesso = async (mainFrameDoc) => {
+  sessionStorage.setItem(CHAVE_AUTOMACAO, null);
+
   if (confirm('Confirma execução do automação Pré-Análise de Processos?')) {
     console.log('Iniciando pré-análise de processos');
 
@@ -16,10 +18,16 @@ const preAnalisarProcesso = async (mainFrameDoc) => {
 }
 
 const preAnalisarProcessoPasso2 = async (userMainFrame) => {
-  const tipoSelect = await esperarPeloElemento('#tipoConclusao', { parent: userMainFrame });
-  tipoSelect.value = '-1';
+  let result = await chrome.storage.sync.get(['tipoConclusao']);
+  if (result.tipoConclusao) {
+    const tipoSelect = await esperarPeloElemento('#tipoConclusao', { parent: userMainFrame });
+    selecionarOpcaoPorLabel(tipoSelect, result.tipoConclusao);
+  } else {
+    alert('Tipo de conclusão não configurado');
+    return;
+  }
 
-  let result = await chrome.storage.sync.get(['agrupadorPreAnalise']);
+  result = await chrome.storage.sync.get(['agrupadorPreAnalise']);
   if (result.agrupadorPreAnalise) {
     const agrupadorSelect = await esperarPeloElemento('#idAgrupador', { parent: userMainFrame });
     selecionarOpcaoPorLabel(agrupadorSelect, result.agrupadorPreAnalise);

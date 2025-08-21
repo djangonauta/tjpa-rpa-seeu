@@ -22,15 +22,19 @@
     "tabs",
     "scripting"
   ],
+  "host_permissions": [
+    "https://*.seeuintegra.pje.jus.br/*"
+  ],
   "content_scripts": [
     {
       "matches": [
         "https://*.seeuintegra.pje.jus.br/*"
       ],
       "js": [
-        "modulos/state.js",
-        "modulos/base.js",
+        "modulos/constantes.js",
+        "modulos/utils.js",
         "modulos/preAnaliseProcesso.js",
+        "modulos/instauracaoIncidentesVencer.js",
         "main.js"
       ],
       "type": "module",

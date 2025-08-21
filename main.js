@@ -21,17 +21,39 @@ function setupAutomation() {
       sessionStorage.setItem(CHAVE_AUTOMACAO, null);
 
       let automacaoData = JSON.parse(automacaoAtual);
-      switch (automacaoData && automacaoData.automacao) {
-        case PRE_ANALISE_PROCESSOS:
+      switch (automacaoData?.automacao) {
+        // automação pré-analise de processos
+        case PRE_ANALISE_PROCESSOS: 
           switch (automacaoData.passo) {
+            // segundo passo da automação pré-analise de processos
             case PRE_ANALISE_PROCESSOS_PASSO_2:
               preAnalisarProcessoPasso2(userMainFrame);
               break;
 
+            // terceiro passo da automação pré-analise de processos
             case PRE_ANALISE_PROCESSOS_PASSO_3:
               preAnalisarProcessoPasso3(userMainFrame);
               break;
           }
+          break;
+
+        // automação instauração de incidentes a vencer
+        case INSTAURAR_INCIDENTES_VENCER:
+           switch (automacaoData.passo) {
+            // segundo passo da automação instauração de incidentes a vencer
+            case INSTAURAR_INCIDENTES_VENCER_PASSO_2:
+              instaurarIncidentesVencerPasso2(userMainFrame);
+              break;
+            // terceiro passo da automação instauração de incidentes a vencer
+            case INSTAURAR_INCIDENTES_VENCER_PASSO_3:
+              instaurarIncidentesVencerPasso3(userMainFrame);
+              break;
+            // terceiro passo da automação instauração de incidentes a vencer
+            case INSTAURAR_INCIDENTES_VENCER_PASSO_4:
+              instaurarIncidentesVencerPasso4(userMainFrame);
+              break;
+           }
+           break;
       }
     }
   }, 500);
@@ -97,54 +119,45 @@ function adicionarCaixaAutomacoes(userMainFrame) {
   if (userMainFrame.querySelector('#caixa-automacoes')) {
     return
   }
-  const preAnaliseProcessos = new ElementBuilder('button').id('botao-pre-analise').style({ 'margin-bottom': '10px' }).text('Pré-analise de processos')
+  const preAnaliseProcessos = new ElementBuilder('button').id('botaoPreAnaliseProcesso').style({ 'margin-bottom': '10px' }).text('Pré-analise de processos')
     .style({ 'margin-left': '10px' })
     .on('click', async () => await preAnalisarProcesso(mainFrameDoc)).build()
 
-  const automacao2 = new ElementBuilder('button').id('botao-pre-analise2').style({ 'margin-bottom': '10px' }).text('Antecipação de Benefícios de Progressão')
+  const instauracaoIncidentesVencer = new ElementBuilder('button').id('instauracaoIncidentesVencer').style({ 'margin-bottom': '10px' }).text('Instaurar Incidentes a Vencer e Realização de Intimação')
+    .style({ 'margin-left': '10px' })
+    .on('click', async () => await instaurarIncidentesVencer(userMainFrame)).build()
+
+  const automacao4 = new ElementBuilder('button').id('botaoPreAnaliseProcesso2').style({ 'margin-bottom': '10px' }).text('Antecipação de Benefícios de Progressão')
     .style({ 'margin-left': '10px' })
     .on('click', async function () {
       alert('clicado')
     }).build()
 
-  const automacao3 = new ElementBuilder('button').id('botao-pre-analise3').style({ 'margin-bottom': '10px' }).text('Intimar Pessoalmente a partir de Despacho PréDeterminado')
+  const automacao3 = new ElementBuilder('button').id('botaoPreAnaliseProcesso3').style({ 'margin-bottom': '10px' }).text('Intimar Pessoalmente a partir de Despacho PréDeterminado')
     .style({ 'margin-left': '10px' })
     .on('click', async function () {
       alert('clicado')
     }).build()
 
-  const automacao4 = new ElementBuilder('button').id('botao-pre-analise4').style({ 'margin-bottom': '10px' }).text('Instaurar Incidentes a Vencer e Realização de Intimação')
+  const automacao5 = new ElementBuilder('button').id('botaoPreAnaliseProcesso5').style({ 'margin-bottom': '10px' }).text('Intimação de Ministério Público, Advogado e Defensor Público de uma decisão ou sentença')
     .style({ 'margin-left': '10px' })
     .on('click', async function () {
       alert('clicado')
     }).build()
 
-  const automacao5 = new ElementBuilder('button').id('botao-pre-analise5').style({ 'margin-bottom': '10px' }).text('Intimação de Ministério Público, Advogado e Defensor Público de uma decisão ou sentença')
+  const automacao7 = new ElementBuilder('button').id('botaoPreAnaliseProcesso7').style({ 'margin-bottom': '10px' }).text('Realizar Mudança de Competência no BNMP')
     .style({ 'margin-left': '10px' })
     .on('click', async function () {
       alert('clicado')
     }).build()
 
-  const automacao6 = new ElementBuilder('button').id('botao-pre-analise6').style({ 'margin-bottom': '10px' }).text('Instauração dos Incidentes a Vencer e Realização de Citação')
-    .style({ 'margin-left': '10px' })
-    .on('click', async function () {
-      alert('clicado')
-    }).build()
-
-  const automacao7 = new ElementBuilder('button').id('botao-pre-analise7').style({ 'margin-bottom': '10px' }).text('Realizar Mudança de Competência no BNMP')
-    .style({ 'margin-left': '10px' })
-    .on('click', async function () {
-      alert('clicado')
-    }).build()
-
-  const caixaAutomacoes = new ElementBuilder('div').id('caixa-automacoes').build()
-  caixaAutomacoes.appendChild(preAnaliseProcessos)
-  caixaAutomacoes.appendChild(automacao2)
-  caixaAutomacoes.appendChild(automacao3)
-  caixaAutomacoes.appendChild(automacao4)
-  caixaAutomacoes.appendChild(automacao5)
-  caixaAutomacoes.appendChild(automacao6)
-  caixaAutomacoes.appendChild(automacao7)
+  const caixaAutomacoes = new ElementBuilder('div').id('caixa-automacoes').build();
+  caixaAutomacoes.appendChild(preAnaliseProcessos);
+  caixaAutomacoes.appendChild(instauracaoIncidentesVencer);
+  caixaAutomacoes.appendChild(automacao3);
+  caixaAutomacoes.appendChild(automacao4);
+  caixaAutomacoes.appendChild(automacao5);
+  caixaAutomacoes.appendChild(automacao7);
 
   const conteudo = userMainFrame.querySelector('#content')
   conteudo.insertAdjacentElement('beforebegin', caixaAutomacoes)
